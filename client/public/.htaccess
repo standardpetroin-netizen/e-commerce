@@ -1,0 +1,22 @@
+# SPA routing for React Router (Hostinger / Apache)
+Options -MultiViews
+DirectoryIndex index.html
+RewriteEngine On
+RewriteBase /
+
+# Don't rewrite real files or directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Everything else -> index.html
+RewriteRule ^ index.html [L]
+
+# Basic caching for hashed assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
