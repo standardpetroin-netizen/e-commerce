@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Routes, Route } from "react-router-dom"
+import { ShopContext } from "./context/ShopContext"
 
 import Navbar from "./components/Navbar"
 
@@ -27,10 +28,21 @@ import { ToastContainer } from "react-toastify";
 import PlaceOrder from "./pages/PlaceOrder"
 
 axios.defaults.withCredentials = true;
+const OfflineBanner = () => {
+  const { apiOffline } = useContext(ShopContext)
+  if (!apiOffline) return null
+  return (
+    <div className="bg-amber-100 text-amber-900 text-center text-xs sm:text-sm px-4 py-2">
+      Store backend is offline right now. You can browse the catalog, but login, cart sync and checkout are unavailable.
+    </div>
+  )
+}
+
 const App = () => {
   
   return (
     <div>
+      <OfflineBanner />
       {/* Navbar visible on all pages */}
       <Navbar />
       <ToastContainer position="top-right" autoClose={2000} />

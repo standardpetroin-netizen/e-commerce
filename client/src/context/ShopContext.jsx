@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { products as localCatalog } from "../assets/assets";
 
 export const ShopContext = createContext();
 
@@ -19,6 +20,8 @@ const ShopContextProvider = (props) => {
   const [user, setUser] = useState(null);
   const [wishlist, setWishlist] = useState([]);
   const [isContextReady, setIsContextReady] = useState(false);
+  // true when the backend API could not be reached and we fell back to the bundled catalog
+  const [apiOffline, setApiOffline] = useState(false);
 
   // Initialize token and user from localStorage and fetch products on component mount
   useEffect(() => {
@@ -74,12 +77,18 @@ const ShopContextProvider = (props) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${API_URL}/product/list`);
-      if (response.data.success) {
+      const response = await axios.get(`${API_URL}/product/list`, { timeout: 12000 });
+      if (response.data.success && Array.isArray(response.data.products) && response.data.products.length > 0) {
         setProducts(response.data.products);
+        setApiOffline(false);
+        return;
       }
+      throw new Error("API returned no products");
     } catch (error) {
-      console.error("Error fetching products:", error);
+      // Backend unreachable: keep the storefront usable with the bundled catalog
+      console.error("Error fetching products, using bundled catalog:", error?.message || error);
+      setProducts(localCatalog);
+      setApiOffline(true);
     }
   };
 
@@ -225,7 +234,8 @@ const ShopContextProvider = (props) => {
     wishlist,
     addToWishlist,
     removeFromWishlist,
-    isContextReady
+    isContextReady,
+    apiOffline
   };
 
   return (

@@ -1,0 +1,28 @@
+# Render Blueprint - redeploys the e-commerce API from this repository.
+# Render dashboard -> New -> Blueprint -> pick this repo -> fill the secret env vars.
+services:
+  - type: web
+    name: e-commerce-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLIENT_URL
+        value: https://thepetroshop.com,https://www.thepetroshop.com

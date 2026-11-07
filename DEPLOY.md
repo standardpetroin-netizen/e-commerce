@@ -40,3 +40,23 @@ That runs `npm ci && npm run build` in `client/`, then force-pushes
 - The API base comes from `client/.env.production` (`VITE_API_URL`), baked in at
   build time. If the backend URL changes, edit that file and re-run `./deploy.sh`.
 - `server/` is not part of the Hostinger static site; it runs separately (Render).
+
+## Backend (API)
+
+`server/` is a separate Express service. It was hosted on Render at
+`https://e-commerce-101p.onrender.com/api` (set in `client/.env.production`).
+When that service is not running, the API edge returns
+`503 Render - Application loading` and the storefront cannot load products.
+
+`render.yaml` at the repo root redeploys it in one step: Render dashboard →
+**New → Blueprint** → select this repo, then fill `MONGO_URL` and the three
+`CLOUDINARY_*` values (`JWT_SECRET` is generated). The service exposes
+`GET /health`, which reports the database state, so a broken Mongo connection
+shows up as `database: "disconnected"` instead of an unexplained 503.
+
+After a new API URL exists, update `VITE_API_URL` in `client/.env.production`
+and run `./deploy.sh`.
+
+The storefront degrades instead of dying: if `/api/product/list` fails or times
+out (12s), `ShopContext` falls back to the bundled catalog in
+`client/src/assets/assets.js` and shows an offline banner.
