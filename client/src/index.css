@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+a.active hr{
+    display: block;
+}
+
+:root {
+  --bg: #FFFDFB;
+  --surface: #FFFFFF;
+  --surface-soft: #F6EFEA;
+
+  --primary: #F8BBD0;
+  --primary-strong: #F48FB1;
+  --accent: #E9A8C6;
+
+  --text: #2D2A2A;
+  --text-muted: #8B7E7E;
+
+  --border: #E8DED8;
+
+  --shadow-soft: 0 8px 24px rgba(0,0,0,0.06);
+  --radius: 14px;
+}

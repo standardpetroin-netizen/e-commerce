@@ -1,0 +1,81 @@
+# ==============================
+# NODE MODULES (Client + Server)
+# ==============================
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# ==============================
+# ENVIRONMENT FILES (SECRET)
+# ==============================
+.env
+server/.env
+client/.env
+.env.local
+.env.*.local
+
+# ==============================
+# LOG FILES
+# ==============================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==============================
+# BUILD FOLDERS
+# ==============================
+build/
+dist/
+out/
+
+# React production build
+client/build/
+
+# ==============================
+# TEMP FILES
+# ==============================
+tmp/
+temp/
+.cache/
+
+# ==============================
+# MULTER UPLOADS (LOCAL FILES)
+# ==============================
+uploads/
+server/uploads/
+
+# ==============================
+# DATABASE FILES (if any local)
+# ==============================
+*.db
+*.sqlite
+
+# ==============================
+# OS FILES
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# IDE / EDITOR FILES
+# ==============================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ==============================
+# TEST COVERAGE
+# ==============================
+coverage/
+
+# ==============================
+# MISC
+# ==============================
+*.pid
+*.seed
+*.pid.lock
